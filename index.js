@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv/config";
-import connectDB from "./utlis/connectDB.js";
+import connectDB from "./utils/connectDB.js";
+
+import userRoute from "./routes/user.js";
 
 /**
  * Creating app instance of express
@@ -13,8 +15,13 @@ const app = express();
 connectDB();
 
 app.get("/", (req, res) => {
-  res.send("k xa from NODE");
+  res.send("Welcome To Personal CMS by Rai Sonahang");
 });
+
+/**
+ * Registering routes
+ */
+app.use("/api", userRoute); //User Routes
 
 /**
  * Running the server
