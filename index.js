@@ -1,8 +1,8 @@
-import express from "express";
-import dotenv from "dotenv/config";
-import connectDB from "./utils/connectDB.js";
+const express = require("express");
+require("dotenv").config();
+const connectDB = require("./utils/connectDB.js");
 
-import userRoute from "./routes/user.js";
+const userRoute = require("./routes/user.js");
 
 /**
  * Creating app instance of express
