@@ -1,5 +1,5 @@
 const express = require("express");
-const { signupController } = require("../controller/auth");
+const { signupController, loginController } = require("../controller/auth");
 const { check } = require("express-validator");
 
 const router = express.Router();
@@ -23,6 +23,18 @@ router.post(
     }),
   ],
   signupController
+);
+
+/**
+ * Login Handler
+ */
+router.post(
+  "/user/login",
+  [
+    check("username", "Username is Required").notEmpty(),
+    check("password", "Password cannot be empty").notEmpty(),
+  ],
+  loginController
 );
 
 module.exports = router;

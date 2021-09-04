@@ -6,39 +6,67 @@ require("dotenv").config();
 
 //User Login Api
 exports.loginController = async (req, res) => {
+  //Checking params
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    //Checking if User Email already Exist
-    let user = await User.findOne({ email });
+    //Checking if User Exist or not
+    let user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ errors: [{ msg: "User Does not Exist" }] });
+      return res.status(400).send({
+        error: [
+          {
+            msg: "User Not Found",
+            params: "username",
+            value: username,
+          },
+        ],
+        status: 400,
+        data: null,
+      });
     }
 
-    //Checking Password Hash
+    //Checking Password is correct or not
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      res.status(401).json({ errors: [{ msg: "Invalid Credentials" }] });
+      res.status(401).send({
+        error: [
+          {
+            msg: "Password not Correct",
+            params: "password",
+            value: password,
+          },
+        ],
+        status: 400,
+        data: null,
+      });
     }
 
     const payload = {
       user: {
-        id: user.id,
+        uid: user.id,
+        username: user.username,
       },
     };
 
+    //Creating token
     jwt.sign(
       payload,
       process.env.JWTSECRET,
-      { expiresIn: 360000 },
+      { expiresIn: 60 * 60 * 24 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.status(200).send({
+          access_token: token,
+          uid: user.id,
+          username: user.username,
+          token_expiry: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+        });
       }
     );
   } catch (error) {
