@@ -13,6 +13,8 @@ const app = express();
  * Connecting to Mongo DB
  */
 connectDB();
+//Validating json usage
+app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => {
   res.send("Welcome To Personal CMS by Rai Sonahang");
