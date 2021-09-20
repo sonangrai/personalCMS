@@ -10,10 +10,11 @@ const profileSchema = new mongoose.Schema(
     email: { type: String },
     dob: { type: Date },
     gitUsername: { type: String },
-    skills: {
-      type: [String],
-      required: true,
-    },
+    skills: [
+      {
+        title: { type: String, required: true },
+      },
+    ],
   },
   {
     timestamps: true,
