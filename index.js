@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const connectDB = require("./utils/connectDB.js");
+const cors = require("cors");
 
 const userRoute = require("./routes/user.js");
 
@@ -15,6 +16,7 @@ const app = express();
 connectDB();
 //Validating json usage
 app.use(express.json({ extended: false }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Welcome To Personal CMS by Rai Sonahang");
