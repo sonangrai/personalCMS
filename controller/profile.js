@@ -1,5 +1,10 @@
 const Profile = require("../models/Profile");
 
+/**
+ *
+ * @param {add profile} req
+ * @param {success||error} res
+ */
 exports.addProfile = async (req, res) => {
   const {
     firstname,
@@ -23,27 +28,25 @@ exports.addProfile = async (req, res) => {
       gitUsername,
     });
 
-    res.send(profile);
-
     //Now saving to the mongoDB
-    // profile.save((err, profile) => {
-    //   if (err) {
-    //     return res.status(400).send({
-    //       error: "Failed to save to DB",
-    //       status: 400,
-    //       data: {
-    //         name: profile.firstname + profile.lastname,
-    //         email: profile.email,
-    //         id: profile._id,
-    //       },
-    //     });
-    //   }
-    //   res.status(200).send({
-    //     msg: "Profile Added Successfully",
-    //     status: 200,
-    //     data: profile,
-    //   });
-    // });
+    profile.save((err, profile) => {
+      if (err) {
+        return res.status(400).send({
+          error: "Failed to save to DB",
+          status: 400,
+          data: {
+            name: profile.firstname + profile.lastname,
+            email: profile.email,
+            id: profile._id,
+          },
+        });
+      }
+      res.status(200).send({
+        msg: "Profile Added Successfully",
+        status: 200,
+        data: profile,
+      });
+    });
   } catch (error) {
     console.log(error);
   }
