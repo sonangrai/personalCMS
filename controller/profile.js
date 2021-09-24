@@ -1,5 +1,6 @@
 const Profile = require("../models/Profile");
 const cloudinary = require("cloudinary").v2;
+const cloudinaryConfig = require("../utils/cloudinaryConfig");
 
 /**
  *
@@ -62,23 +63,15 @@ exports.uploadImage = async (req, res) => {
   //Uploading to Cloudinary
   cloudinary.uploader.upload(imagedata.path, async (error, result) => {
     if (result) {
-      const productid = req.params.pid;
-      const imageurl = "";
-      const imgpublicid = "";
+      let resData = {};
+      resData.imageurl = result.url;
+      resData.imgpublicid = result.public_id;
 
-      gallery = new Gallery({
-        productid,
-        imageurl,
-        imgpublicid,
+      res.status(200).send({
+        msg: "Image Uploaded Successfully",
+        status: 200,
+        data: resData,
       });
-
-      gallery.imageurl = result.url;
-      gallery.imgpublicid = result.public_id;
-
-      try {
-        gallery.save();
-        res.json(gallery);
-      } catch (error) {}
     } else {
       return res.json(error);
     }
