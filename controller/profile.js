@@ -1,4 +1,5 @@
 const Profile = require("../models/Profile");
+const cloudinary = require("cloudinary").v2;
 
 /**
  *
@@ -50,4 +51,36 @@ exports.addProfile = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+/**
+ * Uploading Image
+ */
+exports.uploadImage = async (req, res) => {
+  const imagedata = req.files.image;
+
+  //Uploading to Cloudinary
+  cloudinary.uploader.upload(imagedata.path, async (error, result) => {
+    if (result) {
+      const productid = req.params.pid;
+      const imageurl = "";
+      const imgpublicid = "";
+
+      gallery = new Gallery({
+        productid,
+        imageurl,
+        imgpublicid,
+      });
+
+      gallery.imageurl = result.url;
+      gallery.imgpublicid = result.public_id;
+
+      try {
+        gallery.save();
+        res.json(gallery);
+      } catch (error) {}
+    } else {
+      return res.json(error);
+    }
+  });
 };
