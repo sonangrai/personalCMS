@@ -61,19 +61,25 @@ exports.uploadImage = async (req, res) => {
   const imagedata = req.files.image;
 
   //Uploading to Cloudinary
-  cloudinary.uploader.upload(imagedata.path, async (error, result) => {
-    if (result) {
-      let resData = {};
-      resData.imageurl = result.url;
-      resData.imgpublicid = result.public_id;
+  cloudinary.uploader.upload(
+    imagedata.path,
+    { folder: "myCMS" },
+    async (error, result) => {
+      if (result) {
+        let resData = {};
+        resData.imageurl = result.url;
+        resData.imgpublicid = result.public_id;
+        resData.format = result.format;
+        resData.type = result.resource_type;
 
-      res.status(200).send({
-        msg: "Image Uploaded Successfully",
-        status: 200,
-        data: resData,
-      });
-    } else {
-      return res.json(error);
+        res.status(200).send({
+          msg: "Image Uploaded Successfully",
+          status: 200,
+          data: resData,
+        });
+      } else {
+        return res.json(error);
+      }
     }
-  });
+  );
 };
