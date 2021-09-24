@@ -8,4 +8,4 @@ const router = express.Router();
  */
 router.post("/profile", addProfile);
 
-module.exports = profile;
+module.exports = router;

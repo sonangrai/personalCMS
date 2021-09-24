@@ -4,6 +4,7 @@ const connectDB = require("./utils/connectDB.js");
 const cors = require("cors");
 
 const userRoute = require("./routes/user.js");
+const profileRoute = require("./routes/profile");
 
 /**
  * Creating app instance of express
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
  * Registering routes
  */
 app.use("/api", userRoute); //User Routes
+app.use("/api", profileRoute); //Profile ROuters
 
 /**
  * Running the server
