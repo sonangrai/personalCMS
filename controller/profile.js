@@ -58,7 +58,8 @@ exports.addProfile = async (req, res) => {
  * Uploading Image
  */
 exports.uploadImage = async (req, res) => {
-  const imagedata = req.files.image;
+  const imagedata = req.files.files;
+  console.log(imagedata);
 
   //Uploading to Cloudinary
   cloudinary.uploader.upload(
