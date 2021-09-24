@@ -6,6 +6,6 @@ const router = express.Router();
 /**
  * Add Profile
  */
-router.post("/profile", addProfile);
+router.post("/profile/:id", addProfile);
 
 module.exports = router;
