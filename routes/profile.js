@@ -1,5 +1,9 @@
 const express = require("express");
-const { addProfile, uploadImage } = require("../controller/profile");
+const {
+  addProfile,
+  uploadImage,
+  deleteImage,
+} = require("../controller/profile");
 const multiPart = require("connect-multiparty");
 
 const router = express.Router();
@@ -14,5 +18,10 @@ router.post("/profile/:id", addProfile);
  */
 var multipartMiddleware = multiPart();
 router.post("/media/upload", multipartMiddleware, uploadImage);
+
+/**
+ * Delete Image
+ */
+router.post("/media/delete/:mid", deleteImage);
 
 module.exports = router;
