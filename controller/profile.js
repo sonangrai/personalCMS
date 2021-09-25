@@ -59,7 +59,6 @@ exports.addProfile = async (req, res) => {
  */
 exports.uploadImage = async (req, res) => {
   const imagedata = req.files.files;
-  console.log(imagedata);
 
   //Uploading to Cloudinary
   cloudinary.uploader.upload(
@@ -91,8 +90,7 @@ exports.uploadImage = async (req, res) => {
 exports.deleteImage = async (req, res) => {
   //Deleting from Cloudinary
   cloudinary.uploader.destroy(
-    check.imgpublicid,
-    { folder: "myCMS" },
+    "myCMS/" + req.params.mid,
     async (error, result) => {
       if (result) {
         res.status(200).send({
