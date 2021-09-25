@@ -1,6 +1,6 @@
 const Profile = require("../models/Profile");
 const cloudinary = require("cloudinary").v2;
-const cloudinaryConfig = require("../utils/cloudinaryConfig");
+require("../utils/cloudinaryConfig");
 
 /**
  *
@@ -77,6 +77,28 @@ exports.uploadImage = async (req, res) => {
           msg: "Image Uploaded Successfully",
           status: 200,
           data: resData,
+        });
+      } else {
+        return res.json(error);
+      }
+    }
+  );
+};
+
+/**
+ * Delete Image
+ */
+exports.deleteImage = async (req, res) => {
+  //Deleting from Cloudinary
+  cloudinary.uploader.destroy(
+    check.imgpublicid,
+    { folder: "myCMS" },
+    async (error, result) => {
+      if (result) {
+        res.status(200).send({
+          msg: "Image Deleted Successfully",
+          status: 200,
+          data: {},
         });
       } else {
         return res.json(error);
