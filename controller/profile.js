@@ -50,7 +50,61 @@ exports.addProfile = async (req, res) => {
       });
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error);
+  }
+};
+
+/**
+ *
+ * @param {edit profile} req
+ * @param {*} res
+ */
+exports.editProfile = async (req, res) => {
+  const {
+    firstname,
+    lastname,
+    displayPic,
+    shortDescription,
+    email,
+    dob,
+    gitUsername,
+  } = req.body;
+
+  profile = new Profile({
+    uid: req.params.id,
+    firstname,
+    lastname,
+    displayPic,
+    shortDescription,
+    email,
+    dob,
+    gitUsername,
+  });
+
+  const newProfile = {};
+  if (firstname) newProfile.firstname = firstname;
+  if (lastname) newProfile.lastname = lastname;
+  if (displayPic) newProfile.displayPic = displayPic;
+  if (shortDescription) newProfile.shortDescription = shortDescription;
+  if (email) newProfile.email = email;
+  if (dob) newProfile.dob = dob;
+  if (gitUsername) newProfile.gitUsername = gitUsername;
+
+  res.send(newProfile);
+
+  try {
+    profile = await Profile.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: newProfile },
+      { new: true }
+    );
+    return res.status(400).send({
+      error: "Failed to save to DB",
+      status: 400,
+      data: profile,
+    });
+  } catch (error) {
+    res.status(500).send(error);
   }
 };
 
