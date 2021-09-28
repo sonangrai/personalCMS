@@ -4,6 +4,7 @@ const {
   uploadImage,
   deleteImage,
   editProfile,
+  addSkill,
 } = require("../controller/profile");
 const multiPart = require("connect-multiparty");
 
@@ -29,5 +30,10 @@ router.post("/media/upload", multipartMiddleware, uploadImage);
  * Delete Image
  */
 router.post("/media/delete/:mid", deleteImage);
+
+/**
+ * Add Skills
+ */
+router.put("/skills/:id", addSkill);
 
 module.exports = router;

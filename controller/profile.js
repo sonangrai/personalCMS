@@ -90,22 +90,50 @@ exports.editProfile = async (req, res) => {
   if (dob) newProfile.dob = dob;
   if (gitUsername) newProfile.gitUsername = gitUsername;
 
-  res.send(newProfile);
-
+  console.log(req.params.id);
   try {
     profile = await Profile.findOneAndUpdate(
-      { _id: req.params.id },
+      { uid: req.params.id },
       { $set: newProfile },
       { new: true }
     );
-    return res.status(400).send({
-      error: "Failed to save to DB",
-      status: 400,
+    console.log(profile);
+    return res.status(200).send({
+      error: "Updated Profile",
+      status: 200,
       data: profile,
     });
   } catch (error) {
     res.status(500).send(error);
   }
+};
+
+/**
+ *
+ * @param {add skill} req
+ * @param {*} res
+ */
+exports.addSkill = async (req, res) => {
+  const { skills } = req.body;
+
+  const newProfile = {};
+  if (skills) newProfile.skills = skills;
+
+  try {
+    profile = await Profile.findOneAndUpdate(
+      { uid: req.params.id },
+      { $set: newProfile },
+      { new: true }
+    );
+    return res.status(200).send({
+      error: "Skills Updated",
+      status: 200,
+      data: profile,
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+  res.send(skills);
 };
 
 /**
