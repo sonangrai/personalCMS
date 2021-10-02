@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+const Portfolio = require("../models/Portfolio");
 /**
  *
  * @param {Post new porfolio} req
@@ -14,5 +15,31 @@ exports.addPortfolio = async (req, res) => {
   const { title, category, link, preview, description } = req.body;
 
   try {
-  } catch (error) {}
+    portfolio = new Portfolio({
+      uid: req.user.uid,
+      title,
+      category,
+      link,
+      preview,
+      description,
+    });
+
+    //Now saving to the mongoDB
+    portfolio.save((err, profile) => {
+      if (err) {
+        return res.status(400).send({
+          error: "Failed to save to DB",
+          status: 400,
+          data: portfolio,
+        });
+      }
+      res.status(200).send({
+        msg: "Portfolio Added Successfully",
+        status: 200,
+        data: portfolio,
+      });
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
