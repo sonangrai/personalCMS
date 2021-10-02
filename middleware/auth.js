@@ -7,14 +7,34 @@ module.exports = async function (req, res, next) {
 
   // Check if not token
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res.status(401).json({
+      error: [
+        {
+          msg: "No token",
+          params: "token",
+          value: null,
+        },
+      ],
+      status: 401,
+      data: null,
+    });
   }
 
   // Verify token
   try {
     await jwt.verify(token, process.env.JWTSECRET, (error, decoded) => {
       if (error) {
-        res.status(401).json({ msg: "Token is not valid" });
+        res.status(401).json({
+          error: [
+            {
+              msg: "Token not valid",
+              params: "token",
+              value: null,
+            },
+          ],
+          status: 401,
+          data: null,
+        });
       } else {
         req.user = decoded.user;
         next();

@@ -5,7 +5,6 @@ const { validationResult } = require("express-validator");
  * @param {*} res
  */
 exports.addPortfolio = async (req, res) => {
-  console.log(req.user.id);
   //Checking params
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
