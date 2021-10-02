@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const Portfolio = require("../models/Portfolio");
+
 /**
  *
  * @param {Post new porfolio} req
@@ -41,5 +42,32 @@ exports.addPortfolio = async (req, res) => {
     });
   } catch (error) {
     res.status(500).send(error);
+  }
+};
+
+/**
+ *
+ * @param {Get all porfolio} req
+ * @param {*} res
+ */
+exports.getPortfolio = async (req, res) => {
+  try {
+    const portfolios = await Portfolio.find({ uid: req.user.uid });
+    if (portfolios) {
+      res.status(200).send({
+        error: "Porfolios Retrieved",
+        status: 200,
+        data: portfolios,
+      });
+    } else {
+      res.status(200).send({
+        error: "No Porfolios Added",
+        status: 200,
+        data: null,
+      });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
   }
 };

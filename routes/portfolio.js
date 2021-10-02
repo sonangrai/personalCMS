@@ -1,6 +1,6 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { addPortfolio } = require("../controller/portfolio");
+const { addPortfolio, getPortfolio } = require("../controller/portfolio");
 const auth = require("../middleware/auth");
 
 const router = express.Router();
@@ -17,5 +17,10 @@ router.post(
   ],
   addPortfolio
 );
+
+/**
+ * Get Portfolios
+ */
+router.get("/portfolio", auth, getPortfolio);
 
 module.exports = router;
