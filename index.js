@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const userRoute = require("./routes/user.js");
 const profileRoute = require("./routes/profile");
+const portfolioRoute = require("./routes/portfolio");
 
 /**
  * Creating app instance of express
@@ -27,7 +28,8 @@ app.get("/", (req, res) => {
  * Registering routes
  */
 app.use("/api", userRoute); //User Routes
-app.use("/api", profileRoute); //Profile ROuters
+app.use("/api", profileRoute); //Profile Routers
+app.use("/api", portfolioRoute); //Portfolio router
 
 /**
  * Running the server
