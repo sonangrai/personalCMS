@@ -4,6 +4,7 @@ const {
   addPortfolio,
   getPortfolio,
   addImage,
+  deletePortfolio,
 } = require("../controller/portfolio");
 const auth = require("../middleware/auth");
 
@@ -26,5 +27,10 @@ router.post(
  * Get Portfolios
  */
 router.get("/portfolio", auth, getPortfolio);
+
+/**
+ * Delete Portfolios
+ */
+router.delete("/portfolio/:pid", auth, deletePortfolio);
 
 module.exports = router;

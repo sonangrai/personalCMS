@@ -70,3 +70,28 @@ exports.getPortfolio = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+/**
+ * Delete Portfolio
+ */
+exports.deletePortfolio = async (req, res) => {
+  try {
+    const findPort = await Portfolio.findById(req.params.pid);
+    if (!findPort)
+      return res.status(404).send({
+        error: "Porfolio not found",
+        status: 404,
+        data: null,
+      });
+
+    findPort.remove().then(() => {
+      return res.status(200).send({
+        error: "Portfolio Deleted",
+        status: 200,
+        data: null,
+      });
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
