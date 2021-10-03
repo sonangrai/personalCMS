@@ -1,8 +1,34 @@
+const Gallery = require("../models/Gallery");
+
 /**
  * Add Image to Gallery
  */
 exports.addImage = async (req, res) => {
-  const { gallery } = req.body;
+  const { imageUrl, caption } = req.body;
 
-  res.send(gallery);
+  gallery = new Gallery({
+    pid: req.params.pid,
+    imageUrl,
+    caption,
+  });
+
+  try {
+    //Now saving to the mongoDB
+    gallery.save((err, gallery) => {
+      if (err) {
+        return res.status(400).send({
+          error: "Failed to save to DB",
+          status: 400,
+          data: gallery,
+        });
+      }
+      res.status(200).send({
+        msg: "Image Added Successfully to Gallery",
+        status: 200,
+        data: gallery,
+      });
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };

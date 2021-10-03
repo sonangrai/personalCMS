@@ -7,6 +7,6 @@ const router = express.Router();
 /**
  * Add Image
  */
-router.post("/gallery", auth, addImage);
+router.post("/gallery/:pid", auth, addImage);
 
 module.exports = router;

@@ -6,7 +6,7 @@ const GallerySchema = new mongoose.Schema(
     imageUrl: { type: String, required: true },
     caption: { type: String, required: true },
   },
-  { timestamps }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Gallery", GallerySchema);
