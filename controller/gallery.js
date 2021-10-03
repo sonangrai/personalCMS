@@ -32,3 +32,28 @@ exports.addImage = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+/**
+ * Delete Image from Gallery
+ */
+exports.deleteImage = async (req, res) => {
+  try {
+    const findImage = await Gallery.findById(req.params.gid);
+    if (!findImage)
+      return res.status(404).send({
+        error: "Image not found",
+        status: 404,
+        data: null,
+      });
+
+    findImage.remove().then(() => {
+      return res.status(200).send({
+        error: "Image Deleted",
+        status: 200,
+        data: null,
+      });
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
