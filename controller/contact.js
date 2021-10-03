@@ -61,3 +61,30 @@ exports.getMail = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+/**
+ *
+ * @param {Get mails} req
+ * @param {*} res
+ */
+exports.deleteMail = async (req, res) => {
+  try {
+    const findContact = await Contact.findById(req.params.cid);
+    if (!findContact)
+      return res.status(404).send({
+        error: "Contact not found",
+        status: 404,
+        data: null,
+      });
+
+    findContact.remove().then(() => {
+      return res.status(200).send({
+        error: "Mail Deleted",
+        status: 200,
+        data: null,
+      });
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};

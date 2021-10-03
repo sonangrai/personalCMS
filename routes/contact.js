@@ -1,5 +1,5 @@
 const express = require("express");
-const { sendMail, getMail } = require("../controller/contact");
+const { sendMail, getMail, deleteMail } = require("../controller/contact");
 
 const router = express.Router();
 
@@ -9,8 +9,13 @@ const router = express.Router();
 router.post("/mail", sendMail);
 
 /**
- * SeGetnd mail
+ * Get mail
  */
 router.get("/mail", getMail);
+
+/**
+ * Delete mail
+ */
+router.delete("/mail/:cid", deleteMail);
 
 module.exports = router;
