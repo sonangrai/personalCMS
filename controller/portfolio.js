@@ -21,7 +21,6 @@ exports.addPortfolio = async (req, res) => {
       title,
       category,
       link,
-      preview,
       description,
     });
 

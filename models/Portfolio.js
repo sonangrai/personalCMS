@@ -14,18 +14,9 @@ const PortfolioModal = new mongoose.Schema(
     link: {
       type: String,
     },
-    preview: {
-      type: String,
-    },
     description: {
       type: String,
     },
-    gallery: [
-      {
-        imgUrl: { type: String },
-        caption: { type: String },
-      },
-    ],
   },
   {
     timestamps: true,

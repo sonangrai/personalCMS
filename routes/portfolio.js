@@ -1,6 +1,10 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { addPortfolio, getPortfolio } = require("../controller/portfolio");
+const {
+  addPortfolio,
+  getPortfolio,
+  addImage,
+} = require("../controller/portfolio");
 const auth = require("../middleware/auth");
 
 const router = express.Router();
