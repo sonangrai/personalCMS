@@ -2,7 +2,11 @@ const express = require("express");
 require("dotenv").config();
 const connectDB = require("./utils/connectDB.js");
 const cors = require("cors");
+const path = require("path");
 
+/**
+ * Importing Routes
+ */
 const userRoute = require("./routes/user.js");
 const profileRoute = require("./routes/profile");
 const portfolioRoute = require("./routes/portfolio");
@@ -20,11 +24,12 @@ const app = express();
 connectDB();
 //Validating json usage
 app.use(express.json({ extended: false }));
-app.use(cors());
+app.use(cors()); //Allowing cors
 
-app.get("/", (req, res) => {
-  res.send("Welcome To Personal CMS by Rai Sonahang");
-});
+/**
+ * Serving HTML
+ */
+app.use("/", express.static(path.join(__dirname, "public")));
 
 /**
  * Registering routes
