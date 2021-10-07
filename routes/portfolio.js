@@ -26,7 +26,7 @@ router.post(
 /**
  * Get Portfolios
  */
-router.get("/portfolio", auth, getPortfolio);
+router.get("/portfolio", getPortfolio);
 
 /**
  * Delete Portfolios
