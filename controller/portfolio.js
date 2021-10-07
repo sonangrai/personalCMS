@@ -51,7 +51,7 @@ exports.addPortfolio = async (req, res) => {
  */
 exports.getPortfolio = async (req, res) => {
   try {
-    const portfolios = await Portfolio.find({ uid: req.user.uid });
+    const portfolios = await Portfolio.find();
     if (portfolios) {
       res.status(200).send({
         error: "Porfolios Retrieved",
