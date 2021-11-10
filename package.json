@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "concurrently \"nodemon index.js\" \" npm run dev --prefix PersonalCMSfront\" ",
     "start": "node index.js"
   },
   "keywords": [],
