@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import styles from "./Header.module.scss";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import gsap from "gsap";
 
@@ -57,6 +58,15 @@ const Header = () => {
     });
   };
 
+  const router = useRouter();
+
+  useEffect(() => {
+    gsap.to(mref.current, {
+      left: "-100%",
+      backgroundColor: "#0e090d",
+    });
+  }, [router.asPath]);
+
   //CLose Mobile Menu
   const closeMob = (e) => {
     rotateAnim(e).then(() => {
@@ -108,6 +118,13 @@ const Header = () => {
         <div className={styles.menItem}>
           <Link href="/contact">
             <a>Contact</a>
+          </Link>
+        </div>
+        <div className={styles.menItem}>
+          <Link href="/blogs">
+            <a>
+              Blogs <small>(From Wordpress api)</small>
+            </a>
           </Link>
         </div>
         <div className={styles.menItem}>
